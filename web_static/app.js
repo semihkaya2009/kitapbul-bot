@@ -167,7 +167,7 @@ function renderDownloads(data) {
         ${item.source_count > 1 ? ` · kaynak ${item.used_source}/${item.source_count}` : ""}
         ${item.size ? ` · ${formatBytes(item.size)}` : ""}
       </small>
-      <a class="download-link" href="${escapeHtml(item.url)}">İndir</a>
+      <a class="download-link" href="${escapeHtml(item.url)}" download target="_blank">İndir</a>
     </div>
   `).join("");
 
@@ -179,7 +179,7 @@ function renderDownloads(data) {
   `).join("");
 
   const zipLink = data.zip
-    ? `<a class="download-link" href="${escapeHtml(data.zip.url)}">Tümünü ZIP indir (${formatBytes(data.zip.size)})</a>`
+    ? `<a class="download-link" href="${escapeHtml(data.zip.url)}" download target="_blank">Tümünü ZIP indir (${formatBytes(data.zip.size)})</a>`
     : "";
 
   addMessage("assistant", `
