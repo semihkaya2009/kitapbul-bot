@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kitap Bul</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__overlay"></div>
+        <nav class="topbar" aria-label="Ana">
+          <a class="brand" href="#hero-title" aria-label="Kitap Bul ana sayfa">
+            <span class="brand__mark" aria-hidden="true">KB</span>
+            <span>Kitap Bul</span>
+          </a>
+          <a class="topbar__action" href="#search">Aramaya geç</a>
+        </nav>
+
+        <div class="hero__content">
+          <p class="eyebrow">Telegram arşivinden akıllı kaynak bulucu</p>
+          <h1 id="hero-title">İstediğin kitabı bul</h1>
+          <p class="hero__copy">
+            Kitap adını, yayını veya dersi yaz. Sistem benzer kayıtları tekilleştirir, seçtiğin dosyaları indirilebilir hale getirir.
+          </p>
+          <a class="hero__button" href="#search">Aramayı aç</a>
+        </div>
+      </section>
+
+      <section class="search-stage" id="search" aria-labelledby="search-title">
+        <div class="search-stage__inner">
+          <div class="section-heading">
+            <p class="eyebrow">Kitap asistanı</p>
+            <h2 id="search-title">Aradığın kaynağı yaz</h2>
+          </div>
+
+          <div class="chat-shell" data-animate>
+            <div class="chat-toolbar">
+              <div>
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>Arama hazır</span>
+              </div>
+              <button class="ghost-button" id="clearButton" type="button">Temizle</button>
+            </div>
+
+            <div class="chat-feed" id="chatFeed" aria-live="polite">
+              <article class="message message--assistant">
+                <div class="avatar" aria-hidden="true">AI</div>
+                <div class="bubble">
+                  <strong>Kitap asistanı</strong>
+                  <p>Aramak istediğin kitabı yaz; sonuçları seçilebilir liste olarak getireceğim.</p>
+                </div>
+              </article>
+            </div>
+
+            <form class="search-form" id="searchForm">
+              <label class="visually-hidden" for="searchInput">Kitap ara</label>
+              <input id="searchInput" name="query" type="search" autocomplete="off" placeholder="Örn: maarif orijinal matematik">
+              <button type="submit" id="searchButton">Ara</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

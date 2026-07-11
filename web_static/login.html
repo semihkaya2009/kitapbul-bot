@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kitap Bul | Giriş</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body class="login-body">
+    <main class="login-page">
+      <div class="login-backdrop" aria-hidden="true"></div>
+      <section class="login-card" aria-labelledby="login-title">
+        <div class="login-card__mark" aria-hidden="true">KB</div>
+        <p class="eyebrow">Korunan arşiv</p>
+        <h1 id="login-title">Kitap Bul</h1>
+        <p class="login-copy">Arama paneline geçmek için erişim şifresini gir.</p>
+
+        <form class="login-form" id="loginForm">
+          <label for="passwordInput">Şifre</label>
+          <div class="password-row">
+            <input id="passwordInput" name="password" type="password" autocomplete="current-password" inputmode="numeric" placeholder="Şifre">
+            <button type="button" id="togglePassword" aria-label="Şifreyi göster">Göster</button>
+          </div>
+          <button class="login-submit" id="loginButton" type="submit">Giriş yap</button>
+          <p class="login-error" id="loginError" role="alert"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="/static/login.js" defer></script>
+  </body>
+</html>
