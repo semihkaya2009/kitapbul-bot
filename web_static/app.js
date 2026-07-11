@@ -107,6 +107,9 @@ function renderResults(data) {
           </div>
         </div>
         <span class="result-number">#${index + 1}</span>
+        <a href="${escapeHtml(item.telegram_url)}" target="_blank" class="telegram-link-btn" title="Telegram'da Aç" onclick="event.stopPropagation();">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </a>
       </label>
     `;
   }).join("");

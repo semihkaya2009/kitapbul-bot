@@ -185,9 +185,15 @@ def search_books(query):
 
 
 def result_to_payload(result):
-    group_name, file_name, _, _, *extra = result
+    group_name, file_name, group_id, message_id, *extra = result
     copy_count = extra[0] if extra else 1
     sources = extra[1] if len(extra) > 1 else [result[:4]]
+    
+    gid_str = str(group_id)
+    if gid_str.startswith("-100"):
+        gid_str = gid_str[4:]
+    telegram_url = f"https://t.me/c/{gid_str}/{message_id}"
+
     result_id = cache_result(result)
     return {
         "id": result_id,
@@ -195,6 +201,7 @@ def result_to_payload(result):
         "file": file_name,
         "copy_count": copy_count,
         "source_count": len(sources),
+        "telegram_url": telegram_url,
     }
 
 

@@ -507,7 +507,7 @@ h2 {
 
 .result-item {
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) auto;
+  grid-template-columns: 32px minmax(0, 1fr) auto auto;
   gap: 16px;
   align-items: center;
   padding: 16px;
@@ -590,6 +590,27 @@ h2 {
   padding: 4px 10px;
   border-radius: 6px;
   font-size: 0.875rem;
+}
+
+.telegram-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.telegram-link-btn:hover {
+  background: var(--primary);
+  color: #020617;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--primary-glow);
 }
 
 .select-actions {
