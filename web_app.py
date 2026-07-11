@@ -379,6 +379,11 @@ class BookWebHandler(BaseHTTPRequestHandler):
                     return
                 self.handle_fetch()
                 return
+            if parsed.path == "/api/update":
+                if not require_json_auth(self):
+                    return
+                self.handle_update()
+                return
             self.send_error(HTTPStatus.NOT_FOUND)
         except json.JSONDecodeError:
             error_response(self, "Geçersiz JSON gövdesi")
@@ -477,6 +482,19 @@ class BookWebHandler(BaseHTTPRequestHandler):
             "failed": failed,
             "zip": zip_info,
         })
+
+    def handle_update(self):
+        # Arka planda guncelle scriptini calistir
+        def run_update_bg():
+            try:
+                guncelle.main()
+            except Exception as e:
+                print(f"Guncelleme sirasinda hata: {e}")
+
+        thread = threading.Thread(target=run_update_bg, daemon=True)
+        thread.start()
+        
+        json_response(self, {"ok": True, "message": "Update started in background"})
 
 
 def main():

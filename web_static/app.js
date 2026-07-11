@@ -28,7 +28,12 @@ function escapeHtml(value) {
 }
 
 function scrollChat() {
-  chatFeed.scrollTop = chatFeed.scrollHeight;
+  setTimeout(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth'
+    });
+  }, 50);
 }
 
 function addMessage(type, content) {
@@ -84,6 +89,7 @@ function formatBytes(bytes) {
 }
 
 function renderResults(data) {
+  saveToHistory(data.query);
   currentResults = data.results;
   const resultItems = data.results.map((item, index) => {
     const copyInfo = item.copy_count > 1
@@ -246,3 +252,69 @@ clearButton.addEventListener("click", () => {
   `;
   searchInput.focus();
 });
+
+/* --- Update & History Logic --- */
+
+const updateButton = document.getElementById("updateButton");
+const historyContainer = document.getElementById("historyContainer");
+const historyPills = document.getElementById("historyPills");
+
+updateButton.addEventListener("click", async () => {
+  addMessage("user", `<strong>Güncelle</strong>`);
+  const typing = addTyping();
+  updateButton.disabled = true;
+  updateButton.style.opacity = '0.5';
+
+  try {
+    const data = await postJson("/api/update", {});
+    typing.remove();
+    addMessage("assistant", `<strong>Güncelleme Başlatıldı 🚀</strong><p>Veritabanı güncellemesi arka planda devam ediyor. Bu işlem uzun sürebilir, arka planda tamamlanacaktır.</p>`);
+  } catch (error) {
+    typing.remove();
+    addMessage("assistant", `<strong class="error-text">Hata</strong><p>${escapeHtml(error.message)}</p>`);
+  } finally {
+    updateButton.disabled = false;
+    updateButton.style.opacity = '1';
+  }
+});
+
+function loadHistory() {
+  try {
+    const history = JSON.parse(localStorage.getItem("kitap_search_history") || "[]");
+    return Array.isArray(history) ? history : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveToHistory(query) {
+  let history = loadHistory();
+  // Remove if exists to move to top
+  history = history.filter(q => q.toLowerCase() !== query.toLowerCase());
+  history.unshift(query);
+  // Keep only last 5
+  if (history.length > 5) history = history.slice(0, 5);
+  localStorage.setItem("kitap_search_history", JSON.stringify(history));
+  renderHistory();
+}
+
+function renderHistory() {
+  const history = loadHistory();
+  if (history.length === 0) {
+    historyContainer.style.display = "none";
+    return;
+  }
+  
+  historyContainer.style.display = "flex";
+  historyPills.innerHTML = history.map(q => `<button type="button" class="history-pill" data-query="${escapeHtml(q)}">${escapeHtml(q)}</button>`).join("");
+  
+  historyPills.querySelectorAll('.history-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      searchInput.value = btn.dataset.query;
+      searchButton.click(); // Trigger search
+    });
+  });
+}
+
+// Initial render
+renderHistory();
